@@ -45,7 +45,15 @@ def download_fashion_mnist(local_path):
         if not path.exists(f_path):
             download_file(url_root + f_name, f_path)
 
-
+def download_rt(local_path):
+    url = "http://www.cs.cornell.edu/people/pabo/movie-review-data/rt-polaritydata.tar.gz"
+    data_file = os.path.join(data_dir,'rt-polaritydata.tar.gz')
+    download_file(url, data_file)
+    
+    tar = tarfile.open(data_file)
+    tar.extractall(path=data_dir)
+    tar.close()
+            
 def one_hot(x, n):
     if type(x) == list:
         x = np.array(x)
@@ -155,7 +163,7 @@ def load_rt():
     data_dir = os.path.join(DATASET_DIR, 'rt/')
     
     if not (path.exists(data_dir+'rt-polaritydata/rt-polarity.pos') and path.exists(data_dir+'rt-polaritydata/rt-polarity.neg')):
-        raise Exception('Please download from http://www.cs.cornell.edu/people/pabo/movie-review-data/ and place in the .pos and .neg files in datasets/rt/rt-polaritydata/<HERE>')
+        download_rt(data_dir)
     
     positive_data_file = data_dir+'rt-polaritydata/rt-polarity.pos'
     negative_data_file = data_dir+'rt-polaritydata/rt-polarity.neg'
