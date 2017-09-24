@@ -150,3 +150,23 @@ def load_fashion_mnist(ntrain=60000, ntest=10000, onehot=True):
         teY = np.asarray(teY)
 
     return trX, teX, trY, teY
+
+def load_rt():
+    data_dir = os.path.join(DATASET_DIR, 'rt/')
+    
+    if not (path.exists(data_dir+'rt-polaritydata/rt-polarity.pos') and path.exists(data_dir+'rt-polaritydata/rt-polarity.neg')):
+        raise Exception('Please download from http://www.cs.cornell.edu/people/pabo/movie-review-data/ and place in the .pos and .neg files in datasets/rt/rt-polaritydata/<HERE>')
+    
+    positive_data_file = data_dir+'rt-polaritydata/rt-polarity.pos'
+    negative_data_file = data_dir+'rt-polaritydata/rt-polarity.neg'
+    
+    # Load data from files
+    positive_examples = list(open(positive_data_file, "rb").readlines())
+    positive_examples = [s.strip() for s in positive_examples]
+    negative_examples = list(open(negative_data_file, "rb").readlines())
+    negative_examples = [s.strip() for s in negative_examples]
+            
+    positive_examples = [p.decode("latin-1") for p in positive_examples]
+    negative_examples = [n.decode("latin-1") for n in negative_examples]
+
+    return positive_examples, negative_examples
