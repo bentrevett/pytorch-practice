@@ -2,6 +2,7 @@ import gzip
 import os
 from os import path
 import numpy as np
+import tarfile
 
 import sys
 if sys.version_info.major < 3:
@@ -47,11 +48,11 @@ def download_fashion_mnist(local_path):
 
 def download_rt(local_path):
     url = "http://www.cs.cornell.edu/people/pabo/movie-review-data/rt-polaritydata.tar.gz"
-    data_file = os.path.join(data_dir,'rt-polaritydata.tar.gz')
+    data_file = os.path.join(local_path,'rt-polaritydata.tar.gz')
     download_file(url, data_file)
     
     tar = tarfile.open(data_file)
-    tar.extractall(path=data_dir)
+    tar.extractall(path=local_path)
     tar.close()
             
 def one_hot(x, n):
