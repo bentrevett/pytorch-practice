@@ -1,0 +1,19 @@
+#get number of parameters
+
+param_count = 0
+for param in model.parameters():
+  print(param.data.shape)
+  param_count += np.product(param.data.shape)
+print(param_count)
+
+#flatten parameters for graphing
+
+final_params = []
+for param in model.parameters():
+  final_params.append(param.data.cpu().numpy().flatten())
+final_params_flat = np.concatenate(final_params)
+
+#plot weight values histogram
+
+_ = plt.hist(final_params_flat, bins=200)
+plt.show()
